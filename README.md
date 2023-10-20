@@ -1,6 +1,6 @@
 # Geometry Distance Calculator
 
-Welcome to the Geometry Distance Calculator! This program is designed to calculate distances between points, lines, and planes in three-dimensional space.
+Welcome to the Geometry Distance Calculator! This program is designed to calculate distances between points, lines, and planes in three-dimensional space using vectors.
 
 ## Features
 - **Point Distance**: Calculate the distance between two points.
