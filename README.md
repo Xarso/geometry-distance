@@ -25,5 +25,4 @@ This program requires the following Python libraries:
 - `sys`: A built-in Python library that provides access to some variables used or maintained by the Python interpreter.
 - `fractions`: A built-in Python library for rational number arithmetic.
 
-You can install any missing dependencies using pip:
-`pip install sympy`
+You can install any missing dependencies using pip
