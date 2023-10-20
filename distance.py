@@ -380,47 +380,47 @@ if __name__ == "__main__":
                 r, s = sp.symbols('r s')
                 eq2 = dotProduct(generalConnectionVector, l2.dv)
                 solutions = sp.solve([eq1, eq2], [r, s])
-                punkt_l1 = pointOfLineAndParameters(l1, float(solutions[r]))
-                punkt_l2 = pointOfLineAndParameters(l2, float(solutions[s]))
+                point_l1 = pointOfLineAndParameters(l1, float(solutions[r]))
+                point_l2 = pointOfLineAndParameters(l2, float(solutions[s]))
 
-                connectionVector = connectionVector(punkt_l2, punkt_l1)
+                connectionVector = connectionVector(point_l2, point_l1)
                 distance = vectorLength(connectionVector)
 
                 if distance == 0.0:
-                    print(f"\ndistance: 0, die Geraden schneiden sich in im Point {punkt_l1.output()}, da ihre support point identical sind.")
+                    print(f"\ndistance: 0, the lines intersect in the point {point_l1.output()} since their support points are identical.")
                 else:
-                    print(f"\nNächster Point auf 1. Line: {punkt_l1.output()}")
-                    print(f"Nächster Point auf 2. Line: {punkt_l2.output()}")
+                    print(f"\nnext point on 1st line: {point_l1.output()}")
+                    print(f"next point on 2nd line: {point_l2.output()}")
                     print(f"distance: {beautify(distance)} LU")
 
         elif toCalc["lines"] == 1:
             if toCalc["planes"] == 1:
-                # distance zwischen einer Geraden und einer Plane
-                l = Line(info="Gib die Koordinaten der Geraden durch Kommas getrennt ein und drücke dann die Eingabetaste ")
-                e = Plane(info="\nWähle jetzt die Form, in der die Plane gegeben ist: ")
-                hilfspunkt = Point(numberOfCoordinates=len(l.sv), listOfCoordinates=l.sv)
-                auxiliaryLine = auxiliaryLine(e.normalVector, hilfspunkt)
+                # distance between a line and a plane
+                l = Line(info="Next Point onEnter the coordinates of the straight line separated by commas and then press the Enter key")
+                e = Plane(info="\nNow choose the form in which the plane is given: ")
+                auxiliarypoint = Point(numberOfCoordinates=len(l.sv), listOfCoordinates=l.sv)
+                auxiliaryLine = auxiliaryLine(e.normalVector, auxiliarypoint)
                 perpendicularFoot = plumbPointFromPlaneAndLine(e, auxiliaryLine)
                 print(f"\nperpendicular foot: {perpendicularFoot.output()}")
-                distance = vectorLength(connectionVector(hilfspunkt, perpendicularFoot))
+                distance = vectorLength(connectionVector(auxiliarypoint, perpendicularFoot))
                 print(f"distance: {beautify(distance)} LU")
         elif toCalc["planes"] == 2:
-            # distance zwischen zwei Ebenen
-            e1 = Plane(info="In welcher Form ist die erste Plane gegeben?")
-            e2 = Plane(info="\nIn welcher Form ist die zweite Plane gegeben?")
+            # distance between two planes
+            e1 = Plane(info="In what form is the first plane given?")
+            e2 = Plane(info="\nIn what form is the second level given?")
             if collinear(e1.normalVector, e2.normalVector) == False:
-                print("distance: 0, die Ebenen schneiden sich")
+                print("distance: 0, the planes intersect")
             else:
                 x1 = sp.symbols('x1')
                 equation = sp.Eq(e1.number, e1.normalVector[0]*x1)
-                parameter_spurpunkt_x1 = float(sp.solve(equation)[0])
-                x1_achse = Line(sv=[0.0, 0.0, 0.0], dv=[1.0, 0.0, 0.0])
-                spurpunkt_x1 = pointOfLineAndParameters(x1_achse, parameter_spurpunkt_x1)
+                parameter_intercept_x1 = float(sp.solve(equation)[0])
+                x1_axis = Line(sv=[0.0, 0.0, 0.0], dv=[1.0, 0.0, 0.0])
+                intercept_x1 = pointOfLineAndParameters(x1_axis, parameter_intercept_x1)
 
-                auxiliaryLine = auxiliaryLine(e1.normalVector, spurpunkt_x1)
+                auxiliaryLine = auxiliaryLine(e1.normalVector, intercept_x1)
                 lfp = plumbPointFromPlaneAndLine(e2, auxiliaryLine)
-                distance = vectorLength(connectionVector(lfp, spurpunkt_x1))
+                distance = vectorLength(connectionVector(lfp, intercept_x1))
                 if distance == 0:
-                    print(f"\ndistance: 0 LU, die Ebenen sind identical.")
+                    print(f"\ndistance: 0 LU, the planes are identical.")
                 else:
                     print(f"\ndistance: {beautify(distance)} LU")
