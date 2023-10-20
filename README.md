@@ -8,7 +8,7 @@ Welcome to the Geometry Distance Calculator! This program is designed to calcula
 - **Line Distance**: Calculate the shortest distance between two lines and get the points being closed to each other.
 - **Plane - point - distance**: Calculate the shortest distance and get the point on the plane being the the closest to the other Point.
 - **Plane - line - distance**: Calculate the shortest distance if the plane (the line are parallel) or the point of intersection.
-- **Plane - plane - distance**
+- **Plane - plane - distance**: Calculate the shortest distance between two planes.
 
 Please note that while this program can handle points, lines, and planes, it is optimized for three-dimensional objects. The accuracy of calculations involving lines and planes will decrease in dimensions other than three.
 
