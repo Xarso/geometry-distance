@@ -3,11 +3,14 @@
 Welcome to the Geometry Distance Calculator! This program is designed to calculate distances between points, lines, and planes in three-dimensional space.
 
 ## Features
-- **Point Distance Calculation**: Calculate the distance between two points in 3D space.
-- **Line Distance Calculation**: Calculate the shortest distance between two lines in 3D space.
-- **Plane Distance Calculation**: Calculate the distance from a point to a plane in 3D space.
+- **Point Distance**: Calculate the distance between two points.
+- **Point - Line Distance**: Calculate the shortest distance and get the point in the line being closed to the Point.
+- **Line Distance**: Calculate the shortest distance between two lines and get the points being closed to each other.
+- **Plane - point - distance**: Calculate the shortest distance and get the point on the plane being the the closest to the other Point.
+- **Plane - line - distance**: Calculate the shortest distance if the plane (the line are parallel) or the point of intersection.
+- **Plane - plane - distance**
 
-Please note that while this program can handle points, lines, and planes, it is optimized for three-dimensional objects. The accuracy of calculations involving lines and planes may decrease in dimensions other than three.
+Please note that while this program can handle points, lines, and planes, it is optimized for three-dimensional objects. The accuracy of calculations involving lines and planes will decrease in dimensions other than three.
 
 ## Usage
 To specify what you want to calculate, use the following arguments:
