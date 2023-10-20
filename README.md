@@ -26,4 +26,4 @@ This program requires the following Python libraries:
 - `fractions`: A built-in Python library for rational number arithmetic.
 
 You can install any missing dependencies using pip:
-pip install sympy
+`pip install sympy`
