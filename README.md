@@ -21,11 +21,7 @@ To specify what you want to calculate, use two of the following arguments:
 These arguments do not require a value following them. They simply indicate to the program what type of calculation you wish to perform.
 
 ## Dependencies
-This program requires the following Python libraries:
+This program requires the following external Python libraries:
 - `sympy`: A Python library for symbolic mathematics.
-- `math`: A built-in Python library for mathematical tasks.
-- `argparse`: A built-in Python library for writing user-friendly command-line interfaces.
-- `sys`: A built-in Python library that provides access to some variables used or maintained by the Python interpreter.
-- `fractions`: A built-in Python library for rational number arithmetic.
 
 You can install any missing dependencies using pip
