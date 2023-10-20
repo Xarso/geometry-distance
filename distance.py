@@ -7,8 +7,8 @@ from fractions import Fraction
 import sympy.core.numbers
 
 
-class Punkt():
-    def __init__(self, number_of_coordinates: int = None, liste_der_Koordinaten: list = None, info: str = "Punkt: "):
+class Point():
+    def __init__(self, number_of_coordinates: int = None, liste_der_Koordinaten: list = None, info: str = "Point: "):
         self.coordinates = []
         if number_of_coordinates is None and liste_der_Koordinaten is None:
             eingabe = input(info)
@@ -59,14 +59,14 @@ class Gerade():
             self.rv = rv
 
 
-class Ebene():
-    def __init__(self, normalenvektor: list = None, number=None, info: str = "In welcher Form ist die Ebene gegeben?"):
+class Layer():
+    def __init__(self, normalenvektor: list = None, number=None, info: str = "In welcher Form ist die Layer gegeben?"):
         if normalenvektor is None and number is None:
             option = int(input(f"""{info}
 1. Parameterform (1)
 2. Normalenform (2)
 3. Koordinatenform (3)\nWähle: """))
-            # Wenn die Ebene in Parameterform eingegeben wird
+            # Wenn die Layer in Parameterform eingegeben wird
             if option == 1:
                 def vectorInput():
                     self.sv = input("Stützvektor: ").split(',')
@@ -97,14 +97,14 @@ class Ebene():
                         self.normalenvektor[i] = float(self.normalenvektor[i])
 
                 vectorInput()
-                print("Gibt jetzt einen Punkt in der Ebene ein")
-                point = Punkt(info="Punkt in Ebene: ")
+                print("Gibt jetzt einen Point in der Layer ein")
+                point = Point(info="Point in Layer: ")
                 value = 0
                 for i in range(len(point.coordinates)):
                     value += self.normalenvektor[i] * point.coordinates[i]
                 self.number = float(value)
 
-            # Wenn eine Ebene in Koordinatenform eingegeben wird
+            # Wenn eine Layer in Koordinatenform eingegeben wird
             if option == 3:
                 def vectorInput():
                     self.normalenvektor = input("Normalenvektor: ").split(',')
@@ -131,19 +131,19 @@ class MyArgumentParser(argparse.ArgumentParser):
         Hinter das Programm schreibst du für die Berechnungen:
         -p -p => zwei Punkte
         -p -g => ein Punkte & eine Gerade
-        -p -e => ein Punkte & eine Ebene
+        -p -e => ein Punkte & eine Layer
         -g -g => zwei Geraden
-        -g -e => eine Gerade & eine Ebene
+        -g -e => eine Gerade & eine Layer
         -e -e => zwei Ebenen
         In welcher Reihenfolge du die Komponenten angibst, ist egal.
-        Für die Eingabe von Koordinaten, z.B. von einem Punkt, gibst du sie durch Kommas getrennt ein. Bei Kommazahlen verwendest du den einen Punkt statt einem Komma"""
+        Für die Eingabe von Koordinaten, z.B. von einem Point, gibst du sie durch Kommas getrennt ein. Bei Kommazahlen verwendest du den einen Point statt einem Komma"""
         return custom_help
 
 
 parser = MyArgumentParser()
-parser.add_argument('-p', '--punkt', action='count', default=0, help='Fügt einen Punkt zur Berechnung hinzu')
+parser.add_argument('-p', '--punkt', action='count', default=0, help='Fügt einen Point zur Berechnung hinzu')
 parser.add_argument('-g', '--gerade', action='count', default=0, help='Fügt eine Gerade zur Berechnung hinzu')
-parser.add_argument('-e', '--ebene', action='count', default=0, help='Fügt eine Ebene zur Berechnung hinzu')
+parser.add_argument('-e', '--ebene', action='count', default=0, help='Fügt eine Layer zur Berechnung hinzu')
 parser.add_argument('--mein_arg', help='Zeigt Hilfe für das Programm an')
 
 
@@ -156,7 +156,7 @@ def checkWantedCalculation():
     }
 
 
-def verbindungsvektor(p1: Punkt, p2: Punkt):
+def verbindungsvektor(p1: Point, p2: Point):
     new_vec = []
     for i in range(len(p1.coordinates)):
         new_vec.append(p1.coordinates[i] - p2.coordinates[i])
@@ -233,7 +233,7 @@ def beautify(number: float):
             return f"ca. {rounded} oder {Fraction(number).limit_denominator()}"
 
 
-def allg_verb_vek_p_g(punkt: Punkt, gerade: Gerade):
+def allg_verb_vek_p_g(punkt: Point, gerade: Gerade):
     new_vec = []
     t = sp.symbols('t')
     for i in range(len(punkt.coordinates)):
@@ -251,7 +251,7 @@ def allg_verb_vek_g_g(gerade1, gerade2):
 
 
 
-def hilfsgerade(normalenvektor: list, punkt: Punkt):
+def hilfsgerade(normalenvektor: list, punkt: Point):
     sv = []
     rv = []
     for i in range(len(normalenvektor)):
@@ -269,12 +269,12 @@ def parameter_orthogonal_punkt_gerade(allgemeinerVerbindungsvektor, Vektor2) -> 
     return float(sp.solve(equation)[0])
 
 
-def punkt_aus_gerade_und_parameter(gerade: Gerade, parameter: float) -> Punkt:
+def punkt_aus_gerade_und_parameter(gerade: Gerade, parameter: float) -> Point:
     t = sp.symbols('t')
     vec = []
     for i in range(len(gerade.sv)):
         vec.append(gerade.sv[i] + parameter * gerade.rv[i])
-    return Punkt(len(vec), vec)
+    return Point(len(vec), vec)
 
 
 def skalarprodukt(vektor1, vektor2):
@@ -284,7 +284,7 @@ def skalarprodukt(vektor1, vektor2):
     return sum
 
 
-def lotfusspunkt_aus_ebene_und_gerade(ebene: Ebene, g: Gerade):
+def lotfusspunkt_aus_ebene_und_gerade(ebene: Layer, g: Gerade):
     t = sp.symbols('t')
     equation_string = 0
     for i in range(len(g.sv)):
@@ -329,27 +329,27 @@ if __name__ == "__main__":
         sys.exit()
     elif toCalc["punkte"] == 2:
         # Abstand zwischen zwei Punkten
-        p1 = Punkt(info="Gib die Koordinaten des ersten Punktes durch Kommas getrennt ein und drücke dann die Eingabetaste.\n1. Punkt: ")
-        p2 = Punkt(info="\nJetzt die des zweiten Punktes: \n2. Punkt: ")
+        p1 = Point(info="Gib die Koordinaten des ersten Punktes durch Kommas getrennt ein und drücke dann die Eingabetaste.\n1. Point: ")
+        p2 = Point(info="\nJetzt die des zweiten Punktes: \n2. Point: ")
         v = verbindungsvektor(p1, p2)
         d = beautify(vektorLänge(v))
         print(f"\nAbstand: {d} LE")
     elif toCalc["punkte"] == 1:
-        p = Punkt(info="Gib die Koordinaten des Punktes durch Kommas getrennt ein und drücke dann die Eingabetaste.\nPunkt: ")
+        p = Point(info="Gib die Koordinaten des Punktes durch Kommas getrennt ein und drücke dann die Eingabetaste.\nPunkt: ")
         if toCalc["geraden"] == 1:
-            # Abstand zwischen Punkt und Gerade
+            # Abstand zwischen Point und Gerade
             g = Gerade(info="\nGib jetzt die Koordinaten der Geraden ein")
-            pg: list = allg_verb_vek_p_g(p, g)  # Allgemeinen Verbindungsvektor aus dem eingegebenen Punkt und der Geraden berechnen
-            par = float(parameter_orthogonal_punkt_gerade(pg, g.rv))  # Den Parameter für die Gerade berechnen, für den Punkt mit dem geringsten Abstand
-            punkt: Punkt = punkt_aus_gerade_und_parameter(g, par)  # Den Punkt auf der Geraden berechnen, der am nächsten an dem Punkt dran ist
+            pg: list = allg_verb_vek_p_g(p, g)  # Allgemeinen Verbindungsvektor aus dem eingegebenen Point und der Geraden berechnen
+            par = float(parameter_orthogonal_punkt_gerade(pg, g.rv))  # Den Parameter für die Gerade berechnen, für den Point mit dem geringsten Abstand
+            punkt: Point = punkt_aus_gerade_und_parameter(g, par)  # Den Point auf der Geraden berechnen, der am nächsten an dem Point dran ist
             verbindungsvektor = verbindungsvektor(p, punkt)
             abstand = vektorLänge(verbindungsvektor)
             print(f"\nParameter der Geraden: {beautify(par)}")
-            print(f"Nächster Punkt auf der Geraden: {punkt.output()}")
+            print(f"Nächster Point auf der Geraden: {punkt.output()}")
             print(f"Abstand: {beautify(abstand)} LE")
         if toCalc["ebenen"] == 1:
-            # Abstand zwischen Punkt und Ebene
-            e = Ebene()
+            # Abstand zwischen Point und Layer
+            e = Layer()
             hilfsgerade = hilfsgerade(e.normalenvektor, p)
             lotfusspunkt = lotfusspunkt_aus_ebene_und_gerade(e, hilfsgerade)
             print(f"\nLotfußpunkt: {lotfusspunkt.output()}")
@@ -363,8 +363,8 @@ if __name__ == "__main__":
             g2 = Gerade(info="\nJetzt die zweite Gerade:")
             lagebeziegung = check_lagebeziehung(g1, g2)
             if lagebeziegung == "parallel oder identisch":
-                p = Punkt(number_of_coordinates=len(g1.sv), liste_der_Koordinaten=g1.sv)  # Aufpunkt der Gerade 1
-                allgemeiner_verbindungsvektor = allg_verb_vek_p_g(p, g2)  # Allgemeiner Verbindungsvektor zwischen diesem Punkt und der Geraden 2
+                p = Point(number_of_coordinates=len(g1.sv), liste_der_Koordinaten=g1.sv)  # Aufpunkt der Gerade 1
+                allgemeiner_verbindungsvektor = allg_verb_vek_p_g(p, g2)  # Allgemeiner Verbindungsvektor zwischen diesem Point und der Geraden 2
                 par = parameter_orthogonal_punkt_gerade(allgemeiner_verbindungsvektor, g2.rv)  # Parameter für geringsten Abstand berechnen
                 closest_point = punkt_aus_gerade_und_parameter(g2, par)
                 verbindungsvektor = verbindungsvektor(p, closest_point)
@@ -374,7 +374,7 @@ if __name__ == "__main__":
                 else:
                     print(f"Abstand: {beautify(abstand)}")
             elif "schneidend" in lagebeziegung:
-                print(f"\nAbstand: 0, die geraden schneiden sich im Punkt {lagebeziegung.replace('schneidend ', '')}")
+                print(f"\nAbstand: 0, die geraden schneiden sich im Point {lagebeziegung.replace('schneidend ', '')}")
             elif lagebeziegung == "windschief":
                 allgemeiner_verbindungsvektor = allg_verb_vek_g_g(g1, g2)
                 eq1 = skalarprodukt(allgemeiner_verbindungsvektor, g1.rv)
@@ -388,18 +388,18 @@ if __name__ == "__main__":
                 abstand = vektorLänge(verbindungsvektor)
 
                 if abstand == 0.0:
-                    print(f"\nAbstand: 0, die Geraden schneiden sich in im Punkt {punkt_g1.output()}, da ihre Aufpunkte identisch sind.")
+                    print(f"\nAbstand: 0, die Geraden schneiden sich in im Point {punkt_g1.output()}, da ihre Aufpunkte identisch sind.")
                 else:
-                    print(f"\nNächster Punkt auf 1. Gerade: {punkt_g1.output()}")
-                    print(f"Nächster Punkt auf 2. Gerade: {punkt_g2.output()}")
+                    print(f"\nNächster Point auf 1. Gerade: {punkt_g1.output()}")
+                    print(f"Nächster Point auf 2. Gerade: {punkt_g2.output()}")
                     print(f"Abstand: {beautify(abstand)} LE")
 
         elif toCalc["geraden"] == 1:
             if toCalc["ebenen"] == 1:
-                # Abstand zwischen einer Geraden und einer Ebene
+                # Abstand zwischen einer Geraden und einer Layer
                 g = Gerade(info="Gib die Koordinaten der Geraden durch Kommas getrennt ein und drücke dann die Eingabetaste ")
-                e = Ebene(info="\nWähle jetzt die Form, in der die Ebene gegeben ist: ")
-                hilfspunkt = Punkt(number_of_coordinates=len(g.sv), liste_der_Koordinaten=g.sv)
+                e = Layer(info="\nWähle jetzt die Form, in der die Layer gegeben ist: ")
+                hilfspunkt = Point(number_of_coordinates=len(g.sv), liste_der_Koordinaten=g.sv)
                 hilfsgerade = hilfsgerade(e.normalenvektor, hilfspunkt)
                 lotfusspunkt = lotfusspunkt_aus_ebene_und_gerade(e, hilfsgerade)
                 print(f"\nLotfußpunkt: {lotfusspunkt.output()}")
@@ -407,8 +407,8 @@ if __name__ == "__main__":
                 print(f"Abstand: {beautify(abstand)} LE")
         elif toCalc["ebenen"] == 2:
             # Abstand zwischen zwei Ebenen
-            e1 = Ebene(info="In welcher Form ist die erste Ebene gegeben?")
-            e2 = Ebene(info="\nIn welcher Form ist die zweite Ebene gegeben?")
+            e1 = Layer(info="In welcher Form ist die erste Layer gegeben?")
+            e2 = Layer(info="\nIn welcher Form ist die zweite Layer gegeben?")
             if kollinear(e1.normalenvektor, e2.normalenvektor) == False:
                 print("Abstand: 0, die Ebenen schneiden sich")
             else:
